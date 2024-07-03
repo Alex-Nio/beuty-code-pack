@@ -1,15 +1,19 @@
-import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import path from 'path';
 
-// https://v3.vitejs.ru/config/shared-options.html
 export default defineConfig({
+  plugins: [vue()],
   server: {
     port: 8080,
     strictPort: true,
   },
-  resolve: {
-    alias: [{ find: '@', replacement: resolve(__dirname, './src') }],
+  build: {
+    outDir: 'dist',
+  },
+  publicDir: 'public',
+  define: {
+    'process.env': {},
   },
   css: {
     preprocessorOptions: {
@@ -18,5 +22,9 @@ export default defineConfig({
       },
     },
   },
-  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
 });
